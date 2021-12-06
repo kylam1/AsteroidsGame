@@ -2,8 +2,8 @@ class Spaceship extends Floater
 { 
   public Spaceship() {
     myColor = 0;
-    myCenterX = 400;
-    myCenterY = 400;
+    myCenterX = width/2;
+    myCenterY = height/2;
     myXspeed = 0; myYspeed = 0; 
     myPointDirection = 0;
     corners = 18;
@@ -69,12 +69,20 @@ class Spaceship extends Floater
     }
   }
   
-  public double getmyPointDirection() {return myPointDirection;}
+  public void moveOver(int a, int b) {
+    myCenterX += a;
+    myCenterY += b;
+  }
+  
+  public float getMyPointDirection() {return (float)myPointDirection*PI/180;}
+  public float getCenterX() {return (float)myCenterX;}
+  public float getCenterY() {return (float)myCenterY;}
   
   public void thruster() {
     translate((float)myCenterX, (float)myCenterY);
     int red = 255;
     int green = 0;
+    rotate(PI/2);
     rotate((float)(myPointDirection * PI/180));
     float flameEndY = 37.5;
     for(float flameX = 12.5; flameX > -0; flameX -= 0.2) {
@@ -93,14 +101,51 @@ class Spaceship extends Floater
       green += 1.4;
       flameEndY-=0.2;
     }
+    rotate(-PI/2);
+    rotate(-(float)(myPointDirection * PI/180));
+    translate(-(float)myCenterX, -(float)myCenterY);
   }
   
   public void hyperspace() {
-    myCenterX = Math.random()*750;
-    myCenterY = Math.random()*750;
+    myCenterX = Math.random()*(width-200) + 100;
+    myCenterY = Math.random()*(height-200) + 100;
     myPointDirection = Math.random()*360;
     myXspeed = 0;
     myYspeed = 0;
+  }
+  
+  public void hyperspace(double x, double y, int point) {
+    myCenterX = x;
+    myCenterY = y;
+    myPointDirection = point;
+    myXspeed = 0;
+    myYspeed = 0;
+  }
+  
+  public void move ()   //move the floater in the current direction of travel
+  {      
+    //change the x and y coordinates by myXspeed and myYspeed       
+    myCenterX += myXspeed;    
+    myCenterY += myYspeed;     
+
+    //wrap around screen    
+    if(myCenterX >width)
+    {     
+      myCenterX -= width;    
+    }    
+    else if (myCenterX<0)
+    {     
+      myCenterX += width;    
+    }    
+    if(myCenterY >height)
+    {    
+      myCenterY -= height;    
+    } 
+    
+    else if (myCenterY < 0)
+    {     
+      myCenterY += height;    
+    }   
   }
   
   public void show ()  //Draws the floater at the current position  
@@ -132,9 +177,64 @@ class Spaceship extends Floater
     for (int nI = corners; nI < 23; nI++)
       vertex(xCorners[nI], yCorners[nI]);
     endShape();
+    rotate(-PI/2);
 
     //"unrotate" and "untranslate" in reverse order
     rotate(-1*dRadians);
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }
 }
+
+  /*translate(400, 400);
+  rotate(PI/2);
+  fill(0);
+  stroke(255);
+  beginShape();
+    vertex(0, -30);
+    vertex(10, -20);
+    vertex(20, 10);
+    vertex(60, 30);
+    vertex(20, 30);
+    vertex(35, 45);
+    vertex(25, 55);
+    vertex(5, 30);
+    vertex(5, 50);
+    vertex(-5, 50);
+    vertex(-5, 30);
+    vertex(-25, 55);
+    vertex(-35, 45);
+    vertex(-20, 30);
+    vertex(-60, 30);
+    vertex(-20, 10);
+    vertex(-10, -20);
+    vertex(0, -30);
+  endShape();
+  fill(230);
+  beginShape();
+    vertex(0, -25);
+    vertex(5, -20);
+    vertex(5, -10);
+    vertex(-5, -10);
+    vertex(-5, -20);
+    vertex(0, -25);
+  endShape(); */
+
+  /* int red = 255;
+  int green = 0;
+  for(float flameX = 25; flameX > 0; flameX -= 0.2) {
+    float flameEndY = 75;
+    noStroke();
+    fill(red, green, 0);
+    beginShape();
+      curveVertex(flameX, (7*(flameX*flameX))/125+53); //y = (7*x^2)/125 + 50
+      curveVertex(flameX, (7*(flameX*flameX))/125+53);
+      curveVertex(0, 53);
+      curveVertex(-flameX, (7*(flameX*flameX))/125+53);
+      curveVertex(0, flameEndY);
+      curveVertex(flameX, (7*(flameX*flameX))/125+53);
+      curveVertex(flameX, (7*(flameX*flameX))/125+53);
+    endShape(CLOSE);
+    red -= 0.7;
+    green += 0.7;
+    flameEndY-=0.4;
+  } */
