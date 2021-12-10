@@ -77,6 +77,15 @@ class Spaceship extends Floater
   public float getMyPointDirection() {return (float)myPointDirection*PI/180;}
   public float getCenterX() {return (float)myCenterX;}
   public float getCenterY() {return (float)myCenterY;}
+  public int [] getXcorners() {return xCorners;}
+  public int [] getYcorners() {return yCorners;}
+  
+  public float getRadius() {
+    float sum = 0;
+    for(int i = 0; i < corners; i++)
+      sum += dist((float)myCenterX, (float)myCenterY, (float)(xCorners[i] + myCenterX), (float)(yCorners[i] + myCenterY));
+    return sum/corners;
+  }
   
   public void thruster() {
     translate((float)myCenterX, (float)myCenterY);
@@ -184,6 +193,8 @@ class Spaceship extends Floater
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
   }
 }
+
+
 
   /*translate(400, 400);
   rotate(PI/2);
