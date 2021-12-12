@@ -444,12 +444,17 @@ public void keyPressed() {
       double newY = Math.random()*height-100;
       int newPoint = (int)(Math.random()*360);
       for(int i = 0; i < fleet.length; i++) {
-        fleet[i].hyperspace(newX, newY, newPoint);
+        if(fleet[i] != null)
+          fleet[i].hyperspace(newX, newY, newPoint);
       }
-      fleet[1].moveOver(-50, 50);
-      fleet[2].moveOver(-50, -50);
-      fleet[3].moveOver(-100, 100);
-      fleet[4].moveOver(-100, -100);
+      if(fleet[1] != null)
+        fleet[1].moveOver(-50, 50);
+      if(fleet[2] != null)
+        fleet[2].moveOver(-50, -50);
+      if(fleet[3] != null)
+        fleet[3].moveOver(-100, 100);
+      if(fleet[4] != null)
+        fleet[4].moveOver(-100, -100);
       for(int i = 0; i < stars.length; i++)
         stars[i] = new Star((int)(Math.random()*width), (int)(Math.random()*height));
       while(wreckers.size() != 0)
