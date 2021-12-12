@@ -459,11 +459,11 @@ public void keyPressed() {
   }
   
   if(gameEnd == true) {
-    if(keyCode == 8 && nameLength > 0) {
+    if(key = CODED && keyCode == VK_BACK_SPACE && nameLength > 0) {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
-    else if(keyCode >= 32 && nameLength <= 26) {
+    else if(keyCode >= 32 && keyCode != 127 && nameLength <= 26) {
       name += String.fromCharCode(key);
       nameLength++;
     }
