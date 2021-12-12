@@ -459,10 +459,10 @@ public void keyPressed() {
   }
   
   if(gameEnd == true) {
-    if(key == 8 && nameLength > 0) {
-      name = name.substring(0, nameLength-1);
-      nameLength--;
-    }
+    //if(key == 8 && nameLength > 0) {
+      //name = name.substring(0, nameLength-1);
+      //nameLength--;
+    //}
     else if(key != 127 && nameLength < 26) {
       //name += String.fromCharCode(key);
       name += key;
