@@ -74,11 +74,19 @@ class Spaceship extends Floater
     myCenterY += b;
   }
   
+  public void enlarge(int a) {
+    for(int i = 0; i < xCorners.length; i++) {
+      xCorners[i] = xCorners[i]*a;
+      yCorners[i] = yCorners[i]*a;
+    }
+  }
+  
   public float getMyPointDirection() {return (float)myPointDirection*PI/180;}
   public float getCenterX() {return (float)myCenterX;}
   public float getCenterY() {return (float)myCenterY;}
   public int [] getXcorners() {return xCorners;}
   public int [] getYcorners() {return yCorners;}
+  public void setPointDirection(int x) {myPointDirection = x; }
   
   public float getRadius() {
     float sum = 0;

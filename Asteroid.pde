@@ -1,9 +1,8 @@
 class Asteroid extends Floater {
   private double rotSpeed;
-  private boolean exploding, dead;
+  private boolean exploding;
   public Asteroid() {
     exploding = false;
-    dead = false;
     myColor = (int)(Math.random()*50) + 75;
     myXspeed = Math.random()*2; myYspeed = Math.random()*2; 
     myPointDirection = Math.random()*360;
@@ -54,11 +53,18 @@ class Asteroid extends Floater {
     super.move();
   }
   
+  public void enlarge(int a) {
+    for(int i = 0; i < xCorners.length; i++) {
+      xCorners[i] = xCorners[i]*a;
+      yCorners[i] = yCorners[i]*a;
+    }
+  }
+  
   public int getColor() {return myColor; }
   public float getCenterX() {return (float)myCenterX; }
   public float getCenterY() {return (float)myCenterY; }
-  public boolean getExploding() {return exploding;}
-  public boolean dead() {return dead;}
+  public boolean getExploding() {return exploding; }
+  public void setCenter(double x, double y) {myCenterX = x; myCenterY = y; }
   
   public float getRadius() {
     float sum = 0;

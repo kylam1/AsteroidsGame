@@ -1,4 +1,4 @@
-class Particle extends Asteroid {
+class Particle {
   private double myX, myY, mySize, myAngle, mySpeed;
   private color myColor;
   public Particle(double x, double y, color astColor) {
