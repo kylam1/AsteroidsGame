@@ -468,7 +468,7 @@ public void keyPressed() {
       //if(String.fromCharCode(key) != null) {
         name += String.fromCharCode(key);
         nameLength++;
-      }
+      //}
     }
   }
 }
