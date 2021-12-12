@@ -464,7 +464,7 @@ public void keyPressed() {
   }
   
   if(gameEnd == true) {
-    if((key == 127 || key = 96) && nameLength > 0) {
+    if((key == 127 || key == 96) && nameLength > 0) {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
