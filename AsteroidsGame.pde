@@ -475,6 +475,13 @@ public void keyPressed() {
   }
 }
 
+public void keyDown() {
+  if(key == 8 && nameLength > 0) {
+    name = name.substring(0, nameLength-1);
+    nameLength--;
+  }
+}
+
 public void keyReleased() {
   if(key == 'w' || key == 'W')
     wPressed = false;
@@ -482,9 +489,4 @@ public void keyReleased() {
     aPressed = false;
   if(key == 'd' || key == 'D')
     dPressed = false;
-}
-
-public void myBackspace() {
-  name = name.substring(0, nameLength-1);
-  nameLength--;
 }
