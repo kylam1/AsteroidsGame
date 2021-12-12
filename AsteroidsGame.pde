@@ -362,10 +362,6 @@ if(gameEnd == true) {
     fill(255);
     textSize(25);
     text("Back to Main Menu", width/2, 805);
-    
-    if(keyPressed) {
-      if(key == 8)
-        myBackspace()
     }
 } //End of gameEnd
 
@@ -468,7 +464,7 @@ public void keyPressed() {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
-    else if(key >= 32 && key != 127 && key != 96 && nameLength < 26) {
+    else if(keyCode != VK_SHIFT && key >= 32 && key != 127 && key != 96 && nameLength < 26) {
       name += String.fromCharCode(key);
       nameLength++;
     }
