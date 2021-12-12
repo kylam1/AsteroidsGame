@@ -362,6 +362,11 @@ if(gameEnd == true) {
     fill(255);
     textSize(25);
     text("Back to Main Menu", width/2, 805);
+    
+    if(keyPressed) {
+      if(key == 8)
+        myBackspace()
+    }
 } //End of gameEnd
 
 ///////////////////////////////////////////////////////////////////////
@@ -464,8 +469,7 @@ public void keyPressed() {
       //nameLength--;
     //}
     if(key != 127 && nameLength < 26) {
-      //name += String.fromCharCode(key);
-      name += key;
+      name += String.fromCharCode(key);
       nameLength++;
     }
   }
@@ -478,4 +482,9 @@ public void keyReleased() {
     aPressed = false;
   if(key == 'd' || key == 'D')
     dPressed = false;
+}
+
+public void myBackspace() {
+  name = name.substring(0, nameLength-1);
+  nameLength--;
 }
