@@ -459,7 +459,7 @@ public void keyPressed() {
   }
   
   if(gameEnd == true) {
-    if(key == BACKSPACE && nameLength > 0) {
+    if(keyCode == 8 && nameLength > 0) {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
