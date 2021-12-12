@@ -59,7 +59,7 @@ public void setup() {
 
 public void draw() {
 if(startScreen == true) {
-  noLoop();
+  background(0);
   textAlign(CENTER);
   textSize(50);
   text("Welcome to Asteroids!", width/2, 150);  
@@ -68,19 +68,29 @@ if(startScreen == true) {
  
   strokeWeight(2);
   stroke(200);
+  if(mouseX >= 450 && mouseX <= 750 && mouseY >= 250 && mouseY <= 350) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
   fill(210, 0, 0);
   rect(450, 250, 300, 100);
   fill(255);
   textSize(30);
   text("Start Game", width/2, 305);
   
+  strokeWeight(2);
   stroke(200);
+  if(mouseX >= 450 && mouseX <= 750 && mouseY >= 450 && mouseY <= 550) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
   fill(210, 0, 0);
   rect(450, 450, 300, 100);
   fill(255);
   textSize(30);
   text("Leaderboard", width/2, 505);
   
+  strokeWeight(2);
   stroke(200);
   fill(210, 0, 0);
   rect(450, 650, 300, 100);
@@ -102,6 +112,11 @@ if(leaderboard == true) {
   background(0);
   fill(210, 0, 0);
   strokeWeight(2);
+  stroke(200);
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
   rect(50, 50, 150, 50);
   fill(255);
   textSize(25);
@@ -338,13 +353,19 @@ if(gameEnd == true) {
     
     strokeWeight(2);
     stroke(200);
+    if(mouseX >= 450 && mouseX <= 750 && mouseY >= 750 && mouseY <= 850) {
+      strokeWeight(4);
+      stroke(17, 140, 79);
+    }
     fill(210, 0, 0);
     rect(450, 750, 300, 100);
     fill(255);
     textSize(25);
     text("Back to Main Menu", width/2, 805);
 } //End of gameEnd
-}
+
+///////////////////////////////////////////////////////////////////////
+} //End of draw()
 
 public void mousePressed() {
 if(startScreen == true) {
@@ -352,13 +373,11 @@ if(startScreen == true) {
     startScreen = false;
     gameStart = true;
     startTime = millis();
-    loop();
   } //End of start game
   
   if(mouseX >= 450 && mouseX <= 750 && mouseY >= 450 && mouseY <= 550) { //Leaderboard
     startScreen = false;
     leaderboard = true;
-    loop();
   }
 } //End of startScreen
 
@@ -371,7 +390,7 @@ if(leaderboard == true) {
 }
 
 if(gameEnd == true) {
-  if(mouseX >= 450 && mouseX <= 750 && mouseY >= 700 && mouseY <= 800) { //Return to main menu
+  if(mouseX >= 450 && mouseX <= 750 && mouseY >= 750 && mouseY <= 850) { //Return to main menu
     background(0);
     for(int i = 0; i < leaderboardScore.size(); i++) {
       if(score > leaderboardScore.get(i)) {
