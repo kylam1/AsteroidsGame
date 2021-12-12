@@ -464,9 +464,11 @@ public void keyPressed() {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
-    else if(keyCode != VK_SHIFT && key >= 32 && key != 127 && key != 96 && nameLength < 26) {
-      name += String.fromCharCode(key);
-      nameLength++;
+    else if(key >= 32 && key != 127 && key != 96 && nameLength < 26) {
+      if(String.fromCharCode(key) != null) {
+        name += String.fromCharCode(key);
+        nameLength++;
+      }
     }
   }
 }
