@@ -463,8 +463,8 @@ public void keyPressed() {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
-    else if(key != BACKSPACE && nameLength <= 26) {
-      name += key;
+    else if(keyCode >= 32 && nameLength <= 26) {
+      name += String.fromCharCode(key);
       nameLength++;
     }
   }
