@@ -256,7 +256,7 @@ if(gameStart == true) {
         double tempCenterX = wreckers.get(j).getCenterX(); 
         double tempCenterY = wreckers.get(j).getCenterY();
         int tempColor = wreckers.get(j).getColor();
-        score+=100*wreckers.get(j).getRadius();
+        score+=(int)(100*wreckers.get(j).getRadius());
         wreckers.set(j, new Asteroid());
         for(int k = 1; k < 25; k++) {
           debris.set(0, new Particle(tempCenterX, tempCenterY, tempColor));
