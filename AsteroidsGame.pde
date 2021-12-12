@@ -332,7 +332,8 @@ if(gameEnd == true) {
       text(name, width/2, 655);
       textSize(17);
       fill(220);
-      text("Your name will autosave!", 1030, 690);
+      text("Max name length is 26 characters", 1050, 660);
+      text("Your name will autosave!", 1050, 690);
     }
     
     strokeWeight(2);
@@ -443,7 +444,7 @@ public void keyPressed() {
       name = name.substring(0, nameLength-1);
       nameLength--;
     }
-    else if(key != BACKSPACE) {
+    else if(key != BACKSPACE && nameLength <= 26) {
       name += key;
       nameLength++;
     }
