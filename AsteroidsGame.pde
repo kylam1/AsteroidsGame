@@ -362,7 +362,7 @@ if(gameEnd == true) {
     fill(255);
     textSize(25);
     text("Back to Main Menu", width/2, 805);
-    }
+    
 } //End of gameEnd
 
 ///////////////////////////////////////////////////////////////////////
@@ -465,10 +465,10 @@ public void keyPressed() {
       nameLength--;
     }
     else if(key >= 32 && key != 127 && key != 96 && nameLength < 26) {
-      //if(String.fromCharCode(key) != null) {
+      if(String.fromCharCode(key) != null) {
         name += String.fromCharCode(key);
         nameLength++;
-      //}
+      }
     }
   }
 }
