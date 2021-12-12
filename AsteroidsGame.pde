@@ -465,7 +465,7 @@ public void keyPressed() {
       nameLength--;
     }
     else if(key >= 32 && key != 127 && key != 96 && nameLength < 26) {
-      if(shiftKey == false) {
+      if(event.shiftKey == false) {
         name += String.fromCharCode(key);
         nameLength++;
       }
