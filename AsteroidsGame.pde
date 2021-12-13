@@ -11,7 +11,7 @@ public boolean inHyperSpace;
 public int hyperTime;
 public ArrayList <Particle> debris = new ArrayList <Particle> ();
 public int shipsRemaining;
-public boolean startScreen, leaderboard, settingScreen, controlScreen, gameStart, gameEnd;
+public boolean startScreen, leaderboard, settingScreen, resetConfirmation, controlScreen, gameStart, gameEnd;
 public boolean timeTaken;
 public float startTime, timer, countdown;
 public int score, asteroidsKilled;
@@ -412,7 +412,7 @@ if(settingScreen == true) {
   line(slideBx+3-10, 400, slideBx+3, 390);
   line(slideBx+3+10, 400, slideBx+3, 390);  
   
-  /////////////////////////////////////////////// Control ship
+  /////////////////////////////////////////////// Examples
   stroke(r, g, b);
   for(int i = 0; i < fleetSize; i++) {
     fleet[i] = new Spaceship();
@@ -434,9 +434,55 @@ if(settingScreen == true) {
   for(int i = 0; i < fleetSize; i++)
     fleet[i].show();
   
+  
+  fill(210, 0, 0);
+  strokeWeight(2);
+  stroke(255);
+  if(mouseX >= 550 && mouseX <= 850 && mouseY >= 850 && mouseY <= 920) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(550, 850, 300, 70);
+  textAlign(CENTER);
+  textSize(25);
+  fill(255);
+  text("Reset Leaderboard", 700, 890);
 } //End of settingScreen
 
 //////////////////////////////////////////////// End of Settings Screen
+
+if(resetConfirmation == true) {
+  background(0);
+  textSize(40);
+  fill(255);
+  text("Are you sure you want to reset the leaderboard?", width/2, 400);
+  
+  fill(210, 0, 0);
+  strokeWeight(2);
+  stroke(255);
+  if(mouseX >= 275 && mouseX <= 425 && mouseY >= 550 && mouseY <= 600) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(275, 550, 150, 50);
+  textSize(28);
+  fill(255);
+  text("Yes", 350, 583);
+  
+  fill(210, 0, 0);
+  strokeWeight(2);
+  stroke(255);
+  if(mouseX >= 775 && mouseX <= 925 && mouseY >= 550 && mouseY <= 600) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(775, 550, 150, 50);
+  textSize(28);
+  fill(255);
+  text("No", 850, 583);
+}
+
+/////////////////////////////////////////////// End of Reset Leaderboard Confirmation
 
 if(controlScreen == true) {
   background(0);
@@ -671,8 +717,31 @@ if(settingScreen == true) {
     fleet[3].moveOver(-50, -50);
   }
   
+  if(mouseX >= 550 && mouseX <= 850 && mouseY >= 850 && mouseY <= 920) {
+    settingScreen = false;
+    resetConfirmation = true;
+    background(0);
+  }
 }
 //////////////////////////////////////////////////////////////////////////////////////////
+if(resetConfirmation == true) {
+  if(mouseX >= 275 && mouseX <= 425 && mouseY >= 550 && mouseY <= 600) {
+    while(leaderboardScore.size() != 0) {
+      leaderboardScore.remove(0);
+      leaderboardTime.remove(0);
+      leaderboardName.remove(0);
+    }
+    resetConfirmation = false;
+    startScreen = true;
+    background(0);
+  }
+  if(mouseX >= 775 && mouseX <= 925 && mouseY >= 550 && mouseY <= 600) {
+    resetConfirmation = false;
+    settingScreen = true;
+    background(0);
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////
 if(controlScreen == true) {
   if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
     startScreen = true;
