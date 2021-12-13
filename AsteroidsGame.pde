@@ -1,12 +1,17 @@
 public Star[] stars = new Star[300];
 public Spaceship[] fleet = new Spaceship[5];
+public int fleetSize = 5;
+public int leftCorner, currentCorner; //Corner of rect based on fleetSize in Settings menu
+public color shipColor; public int r = 255; public int g = 255; public int b = 255;
+public int slideRx = 524; public int slideGx = 824; public int slideBx = 1124;
 public Spaceship Delta; public Spaceship Omicron;
 public ArrayList <Asteroid> wreckers = new ArrayList <Asteroid> ();
 public boolean wPressed, aPressed, dPressed;
 public boolean inHyperSpace;
+public int hyperTime;
 public ArrayList <Particle> debris = new ArrayList <Particle> ();
 public int shipsRemaining;
-public boolean startScreen, leaderboard, gameStart, gameEnd;
+public boolean startScreen, leaderboard, settingScreen, controlScreen, gameStart, gameEnd;
 public boolean timeTaken;
 public float startTime, timer, countdown;
 public int score, asteroidsKilled;
@@ -24,14 +29,26 @@ public void setup() {
     stars[i] = new Star((int)(Math.random()*width), (int)(Math.random()*height));
   }
   
-  for(int i = 0; i < fleet.length; i++) {
+  hyperTime = 0;
+  for(int i = 0; i < fleetSize; i++) {
     fleet[i] = new Spaceship();
   }
-  fleet[1].moveOver(-50, 50);
-  fleet[2].moveOver(-50, -50);
-  fleet[3].moveOver(-100, 100);
-  fleet[4].moveOver(-100, -100);
-  shipsRemaining = fleet.length;
+  if(fleetSize%2 == 1) {
+    fleet[1].moveOver(-50, 50);
+    fleet[2].moveOver(-50, -50);
+    fleet[3].moveOver(-100, 100);
+    fleet[4].moveOver(-100, -100);
+  }
+  else {
+    fleet[1].moveOver(-100, 0);
+    fleet[2].moveOver(-50, 50);
+    fleet[3].moveOver(-50, -50);
+  }
+  shipsRemaining = fleetSize;
+  leftCorner = 300+(fleetSize - 1)*200 - 75; //Arithmetic sequence for corner of rect based on fleetSize in Settings menu
+  currentCorner = leftCorner;
+  shipColor = color(r, g, b);
+  
   
   Delta = new Spaceship();
   Omicron = new Spaceship();
@@ -62,8 +79,10 @@ if(startScreen == true) {
   background(0);
   textAlign(CENTER);
   textSize(50);
+  strokeWeight(2);
   text("Welcome to Asteroids!", width/2, 150);  
   
+  stroke(r, g, b);
   Delta.show(); Omicron.show();
  
   strokeWeight(2);
@@ -99,6 +118,30 @@ if(startScreen == true) {
   text("Coming Soon!", width/2, 705);
   fill(200);
   line(450,650,750,750);
+
+  strokeWeight(2);
+  stroke(200);
+  if(mouseX >= 75 && mouseX <= 325 && mouseY >= 455 && mouseY <= 542) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  fill(210);
+  rect(75, 455, 250, 87);
+  fill(255);
+  textSize(30);
+  text("Settings", 200, 505);
+  
+  strokeWeight(2);
+  stroke(200);
+  if(mouseX >= 875 && mouseX <= 1125 && mouseY >= 455 && mouseY <= 542) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  fill(210);
+  rect(875, 455, 250, 87);
+  fill(255);
+  textSize(30);
+  text("Controls", 1000, 505);
   
   textSize(25);
   fill(255);
@@ -224,6 +267,202 @@ if(leaderboard == true) {
 
 ///////////////////////////////////////////////// End of leaderboard
 
+if(settingScreen == true) {
+  background(0);
+  fill(210, 0, 0);
+  strokeWeight(2);
+  stroke(200);
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(50, 50, 150, 50);
+  fill(255);
+  textSize(25);
+  textAlign(CENTER);
+  text("Return", 125, 83);
+  
+  textAlign(CENTER);
+  fill(255);
+  textSize(60);
+  text("Settings", width/2, 120);
+  
+  fill(200);
+  textSize(30);
+  text("Fleet Size", 100, 250);
+  text("1", 300, 250);
+  text("2", 500, 250);
+  text("3", 700, 250);
+  text("4", 900, 250);
+  text("5", 1100, 250);
+  
+  noFill();
+  strokeWeight(3);
+  stroke(247,201,56);
+  leftCorner = 300+(fleetSize-1)*200 - 75; //Arithmetic sequence for corner of rect based on fleetSize in Settings menu
+  if(currentCorner > leftCorner)
+    currentCorner-=5;
+  else if(currentCorner < leftCorner)
+    currentCorner+=5;
+  rect(currentCorner, 213, 150, 50);
+  
+  ///////////////////////RED
+  if(mousePressed == true && (mouseY>=340 && mouseY<=410)) { //Vertical limiter
+    if(slideRx == 269) { //Left of slider
+      if(mouseX>=269 && mouseX<=275)
+        slideRx = mouseX;
+    }
+    else if(slideRx == 524) { //Right of slider
+      if(mouseX<=524 && mouseX>=518)
+        slideRx = mouseX;
+    }
+    else if((slideRx > 269 && slideRx < 524) && (mouseX > slideRx - 20 && mouseX < slideRx + 20)) { //Middle of slider
+      slideRx = mouseX;
+    }
+  }
+  if(slideRx < 269) //Top backup reset
+    slideRx = 269;
+  if(slideRx > 524)  //Bottom backup reset
+    slideRx = 524;
+  r = slideRx-269;
+  
+  fill(200);
+  text("Ship Color", 100, 360);
+  noStroke();
+  fill(r, 0, 0);
+  text("Red = " + r, 400, 325);
+  for(int slideR = 0; slideR <= 255; slideR++) {
+    fill(slideR, g, b);
+    rect(272+slideR, 350, 1, 40);
+  }
+  noFill();
+  stroke(r, 0, 0);
+  strokeWeight(1);
+  rect(slideRx, 350, 6, 40);
+  stroke(255);
+  line(slideRx+3-10, 400, slideRx+3, 390);
+  line(slideRx+3+10, 400, slideRx+3, 390);
+  
+  ////////////////////////GREEN
+  if(mousePressed == true && (mouseY>=340 && mouseY<=410)) { //Vertical limiter
+    if(slideGx == 569) { //Left of slider
+      if(mouseX>=569 && mouseX<=575)
+        slideGx = mouseX;
+    }
+    else if(slideGx == 824) { //Right of slider
+      if(mouseX<=824 && mouseX>=818)
+        slideGx = mouseX;
+    }
+    else if((slideGx > 569 && slideGx < 824) && (mouseX > slideGx - 20 && mouseX < slideGx + 20)) { //Middle of slider
+      slideGx = mouseX;
+    }
+  }
+  if(slideGx < 569) //Top backup reset
+    slideGx = 569;
+  if(slideGx > 824)  //Bottom backup reset
+    slideGx = 824;
+  g = slideGx-569;
+  
+  noStroke();
+  fill(0, g, 0);
+  text("Green = " + g, 700, 325);
+  for(int slideG = 0; slideG <= 255; slideG++) {
+    fill(r, slideG, b);
+    rect(572 + slideG, 350, 1, 40);
+  }
+  noFill();
+  stroke(0, g, 0);
+  strokeWeight(1);
+  rect(slideGx, 350, 6, 40);
+  stroke(255);
+  line(slideGx+3-10, 400, slideGx+3, 390);
+  line(slideGx+3+10, 400, slideGx+3, 390);
+  
+  ///////////////////////////BLUE
+  if(mousePressed == true && (mouseY>=340 && mouseY<=410)) { //Vertical limiter
+    if(slideBx == 869) { //Left of slider
+      if(mouseX>=869 && mouseX<=875)
+        slideBx = mouseX;
+    }
+    else if(slideBx == 1124) { //Right of slider
+      if(mouseX<=1124 && mouseX>=1118)
+        slideBx = mouseX;
+    }
+    else if((slideBx > 869 && slideBx < 1124) && (mouseX > slideBx - 20 && mouseX < slideBx + 20)) { //Middle of slider
+      slideBx = mouseX;
+    }
+  }
+  if(slideBx < 869) //Top backup reset
+    slideBx = 869;
+  if(slideBx > 1124)  //Bottom backup reset
+    slideBx = 1124;
+  b = slideBx-869;
+  
+  noStroke();
+  fill(0, 0, b);
+  text("Blue = " + b, 1000, 325);
+  for(int slideB = 0; slideB <= 255; slideB++) {
+    fill(r, g, slideB);
+    rect(872 + slideB, 350, 1, 40);
+  }
+  noFill();
+  stroke(0, 0, b);
+  strokeWeight(1);
+  rect(slideBx, 350, 6, 40);
+  stroke(255);
+  line(slideBx+3-10, 400, slideBx+3, 390);
+  line(slideBx+3+10, 400, slideBx+3, 390);  
+  
+  /////////////////////////////////////////////// Control ship
+  stroke(r, g, b);
+  for(int i = 0; i < fleetSize; i++) {
+    fleet[i] = new Spaceship();
+    fleet[i].setPointDirection(-90);
+  }
+  if(fleetSize%2 == 1) {
+    fleet[0].moveOver(100, -50);
+    fleet[1].moveOver(50, 0);
+    fleet[2].moveOver(150, 0);
+    fleet[3].moveOver(0, 50);
+    fleet[4].moveOver(200, 50);
+  }
+  else {
+    fleet[0].moveOver(100, -50);
+    fleet[1].moveOver(100, 50);
+    fleet[2].moveOver(50, 0);
+    fleet[3].moveOver(150, 0);
+  }
+  for(int i = 0; i < fleetSize; i++)
+    fleet[i].show();
+  
+} //End of settingScreen
+
+//////////////////////////////////////////////// End of Settings Screen
+
+if(controlScreen == true) {
+  background(0);
+  fill(210, 0, 0);
+  strokeWeight(2);
+  stroke(200);
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(50, 50, 150, 50);
+  fill(255);
+  textSize(25);
+  textAlign(CENTER);
+  text("Return", 125, 83);
+  
+  textAlign(CENTER);
+  fill(255);
+  textSize(60);
+  text("Controls", width/2, 120);
+  
+}
+
+//////////////////////////////////////////////// End of Controls Screen
+
 if(gameStart == true) {
   background(0);
   fill(255);
@@ -239,15 +478,16 @@ if(gameStart == true) {
     wreckers.get(i).show();
   }
   
-  for(int i = 0; i < fleet.length; i++) {
+  for(int i = 0; i < fleetSize; i++) {
     if(fleet[i] != null) {
       fleet[i].move();
+      stroke(shipColor);
       fleet[i].show();
     }
   }  
       
   if(wPressed == true) {
-    for(int i = 0; i < fleet.length; i++) {
+    for(int i = 0; i < fleetSize; i++) {
       if(fleet[i] != null) {
         fleet[i].accelerate(0.1);
         fleet[i].thruster();
@@ -255,17 +495,17 @@ if(gameStart == true) {
     }
   }
   if(aPressed == true) {
-    for(int i = 0; i < fleet.length; i++) 
+    for(int i = 0; i < fleetSize; i++) 
      if(fleet[i] != null) 
       fleet[i].turn(-5);
   }
   if(dPressed == true) {
-    for(int i = 0; i < fleet.length; i++) 
+    for(int i = 0; i < fleetSize; i++) 
      if(fleet[i] != null) 
       fleet[i].turn(5);
   }
   
-  for(int i = 0; i < fleet.length; i++) {
+  for(int i = 0; i < fleetSize; i++) {
     for(int j = 0; j < wreckers.size(); j++) {
       if( fleet[i] != null && dist(fleet[i].getCenterX(), fleet[i].getCenterY(), wreckers.get(j).getCenterX(), wreckers.get(j).getCenterY()) < fleet[i].getRadius() + wreckers.get(j).getRadius() + 1.5) {
         double tempCenterX = wreckers.get(j).getCenterX(); 
@@ -284,7 +524,7 @@ if(gameStart == true) {
           debris.add(n, new Particle(shipCenterX, shipCenterY, explodeColor));
         }
         fleet[i] = null;
-        shipsRemaining -= 1;
+        shipsRemaining --;
         asteroidsKilled++;
       }
     }
@@ -338,7 +578,7 @@ if(gameEnd == true) {
     rect(300, 600, 600, 100);
     textAlign(CENTER);
     textSize(25);
-    if(name == "") {
+    if(nameLength == 0) {
       fill(200);
       text("Type your name to save your score", width/2, 650);
     }
@@ -364,9 +604,9 @@ if(gameEnd == true) {
     text("Back to Main Menu", width/2, 805);
     
 } //End of gameEnd
-
-///////////////////////////////////////////////////////////////////////
 } //End of draw()
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 public void mousePressed() {
 if(startScreen == true) {
@@ -374,14 +614,22 @@ if(startScreen == true) {
     startScreen = false;
     gameStart = true;
     startTime = millis();
-  } //End of start game
-  
+  } 
   if(mouseX >= 450 && mouseX <= 750 && mouseY >= 450 && mouseY <= 550) { //Leaderboard
     startScreen = false;
     leaderboard = true;
+  }  
+  if(mouseX >= 75 && mouseX <= 325 && mouseY >= 455 && mouseY <= 542) { //Settings
+    startScreen = false;
+    settingScreen = true;
+  }    
+  if(mouseX >= 875 && mouseX <= 1125 && mouseY >= 455 && mouseY <= 542) { //Controls
+    startScreen = false;
+    controlScreen = true;
   }
 } //End of startScreen
 
+///////////////////////////////////////////////////////////////////////////////////////////
 if(leaderboard == true) {
   if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
     startScreen = true;
@@ -389,6 +637,51 @@ if(leaderboard == true) {
     background(0);
   }
 }
+//////////////////////////////////////////////////////////////////////////////////////////
+if(settingScreen == true) {
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+    startScreen = true;
+    settingScreen = false;
+    background(0);
+  } 
+    
+  if(mouseX >= 225 && mouseX <= 375 && mouseY >= 200 && mouseY <= 300) 
+    fleetSize = 1;
+  if(mouseX >= 425 && mouseX <= 575 && mouseY >= 200 && mouseY <= 300) 
+    fleetSize = 2;
+  if(mouseX >= 625 && mouseX <= 775 && mouseY >= 200 && mouseY <= 300) 
+    fleetSize = 3;
+  if(mouseX >= 825 && mouseX <= 975 && mouseY >= 200 && mouseY <= 300) 
+    fleetSize = 4;
+  if(mouseX >= 1025 && mouseX <= 1175 && mouseY >= 200 && mouseY <= 300) 
+    fleetSize = 5;
+  shipsRemaining = fleetSize;
+  
+  for(int i = 0; i < fleetSize; i++) {
+    fleet[i] = new Spaceship();
+  }
+  if(fleetSize%2 == 1) {
+    fleet[1].moveOver(-50, 50);
+    fleet[2].moveOver(-50, -50);
+    fleet[3].moveOver(-100, 100);
+    fleet[4].moveOver(-100, -100);
+  }
+  else {
+    fleet[1].moveOver(-100, 0);
+    fleet[2].moveOver(-50, 50);
+    fleet[3].moveOver(-50, -50);
+  }
+  
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+if(controlScreen == true) {
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+    startScreen = true;
+    controlScreen = false;
+    background(0);
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////
 
 if(gameEnd == true) {
   if(mouseX >= 450 && mouseX <= 750 && mouseY >= 750 && mouseY <= 850) { //Return to main menu
@@ -430,6 +723,7 @@ if(gameEnd == true) {
 } //End of end screen
 } //End of draw()
 
+////////////////////////////////////////////////////////////////////
 
 public void keyPressed() {
   if(gameStart == true) {
@@ -475,6 +769,8 @@ public void keyPressed() {
     }
   }
 }
+
+/////////////////////////////////////////////////////////////
 
 public void keyReleased() {
   if(key == 'w' || key == 'W')
