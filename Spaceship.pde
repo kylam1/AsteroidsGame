@@ -167,8 +167,7 @@ class Spaceship extends Floater
   
   public void show ()  //Draws the floater at the current position  
   {             
-    fill(myColor);   
-    stroke(255);    
+    fill(myColor);       
     
     //translate the (x,y) center of the ship to the correct position
     translate((float)myCenterX, (float)myCenterY);
