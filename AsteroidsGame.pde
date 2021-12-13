@@ -2,7 +2,7 @@ public Star[] stars = new Star[300];
 public Spaceship[] fleet = new Spaceship[5];
 public int fleetSize = 5;
 public int leftCorner, currentCorner; //Corner of rect based on fleetSize in Settings menu
-public color shipColor; public int r = 255; public int g = 255; public int b = 255;
+public int r = 255; public int g = 255; public int b = 255;
 public int slideRx = 524; public int slideGx = 824; public int slideBx = 1124;
 public Spaceship Delta; public Spaceship Omicron;
 public ArrayList <Asteroid> wreckers = new ArrayList <Asteroid> ();
@@ -47,7 +47,6 @@ public void setup() {
   shipsRemaining = fleetSize;
   leftCorner = 300+(fleetSize - 1)*200 - 75; //Arithmetic sequence for corner of rect based on fleetSize in Settings menu
   currentCorner = leftCorner;
-  shipColor = color(r, g, b);
   
   
   Delta = new Spaceship();
@@ -481,7 +480,7 @@ if(gameStart == true) {
   for(int i = 0; i < fleetSize; i++) {
     if(fleet[i] != null) {
       fleet[i].move();
-      stroke(shipColor);
+      stroke(r, g, b);
       fleet[i].show();
     }
   }  
