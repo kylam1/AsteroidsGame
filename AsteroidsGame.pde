@@ -13,7 +13,7 @@ public ArrayList <Particle> debris = new ArrayList <Particle> ();
 public int shipsRemaining;
 public boolean startScreen, leaderboard, settingScreen, resetConfirmation, controlScreen, gameStart, gameEnd;
 public boolean setAccelKey, setLeftKey, setRightKey, setShootKey, setHyperKey, controlLock;
-public char accelKey = String.fromCharCode(119); public char leftKey = String.fromCharCode(97); public char rightKey = String.fromCharCode(100); public char shootKey = ' '; public char hyperKey = String.fromCharCode(114);
+public String accelKey = String.fromCharCode(119); public String leftKey = String.fromCharCode(97); public String rightKey = String.fromCharCode(100); public String shootKey = " "; public String hyperKey = String.fromCharCode(114);
 public boolean timeTaken;
 public float startTime, timer, countdown;
 public int score, asteroidsKilled;
@@ -517,7 +517,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 248);
   }
   else {
-    if(accelKey == ' ')
+    if(accelKey == " ")
       text("SPACEBAR", 862, 248);
     else
       text(accelKey, 862, 248);
@@ -540,7 +540,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 398);
   }
   else {
-    if(leftKey == ' ')
+    if(leftKey == " ")
       text("SPACEBAR", 862, 398);
     else
       text(leftKey, 862, 398);
@@ -563,7 +563,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 548);
   }
   else {
-    if(rightKey == ' ')
+    if(rightKey == " ")
       text("SPACEBAR", 862, 548);
     else
       text(rightKey, 862, 548);
@@ -586,7 +586,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 698);
   }
   else {
-    if(shootKey == ' ')
+    if(shootKey == " ")
       text("SPACEBAR", 862, 698);
     else
       text(shootKey, 862, 698);
@@ -609,7 +609,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 848);
   }
   else {
-    if(hyperKey == ' ')
+    if(hyperKey == " ")
       text("SPACEBAR", 862, 848);
     else
       text(hyperKey, 862, 848);
@@ -978,13 +978,13 @@ if(gameEnd == true) {
 ////////////////////////////////////////////////////////////////////
 public void keyPressed() {
   if(gameStart == true) {
-    if(key == accelKey)
+    if(key == accelKey.charCodeAt(0))
       wPressed = true;
-    if(key == leftKey)
+    if(key == leftKey.charCodeAt(0))
       aPressed = true;
-    if(key == rightKey)
+    if(key == rightKey.charCodeAt(0))
       dPressed = true;
-    if(key == hyperKey) {
+    if(key == hyperKey.charCodeAt(0)) {
       if(millis() - hyperTime >= 1500) {
         double newX = Math.random()*width-100;
         double newY = Math.random()*height-100;
@@ -1026,31 +1026,31 @@ public void keyPressed() {
   if(controlScreen == true) {
     if(setAccelKey == true && key >= 32 && key <= 126) {
       if(key == 32)
-        accelKey = ' ';
+        accelKey = " ";
       else
         accelKey = String.fromCharCode(key);
     }
     if(setLeftKey == true && key >= 32 && key <= 126) {
       if(key == 32)
-        leftKey = ' ';
+        leftKey = " ";
       else
         leftKey = String.fromCharCode(key);
     }
     if(setRightKey == true && key >= 32 && key <= 126) {
       if(key == 32)
-        rightKey = ' ';
+        rightKey = " ";
       else
         rightKey = String.fromCharCode(key);
     }
     if(setShootKey == true && key >= 32 && key <= 126) {
       if(key == 32)
-        shootKey = ' ';
+        shootKey = " ";
       else
         shootKey = String.fromCharCode(key);
     }
     if(setHyperKey == true && key >= 32 && key <= 126) {
        if(key == 32)
-        hyperKey = ' ';
+        hyperKey = " ";
       else
         hyperKey = String.fromCharCode(key);
     }
@@ -1068,10 +1068,10 @@ public void keyPressed() {
 /////////////////////////////////////////////////////////////
 
 public void keyReleased() {
-  if(key == accelKey)
+  if(key == accelKey.charCodeAt(0))
     wPressed = false;
-  if(key == leftKey)
+  if(key == leftKey.charCodeAt(0))
     aPressed = false;
-  if(key == rightKey)
+  if(key == rightKey.charCodeAt(0))
     dPressed = false;
 }
