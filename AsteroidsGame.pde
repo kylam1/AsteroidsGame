@@ -12,6 +12,8 @@ public int hyperTime;
 public ArrayList <Particle> debris = new ArrayList <Particle> ();
 public int shipsRemaining;
 public boolean startScreen, leaderboard, settingScreen, resetConfirmation, controlScreen, gameStart, gameEnd;
+public boolean setAccelKey, setLeftKey, setRightKey, setShootKey, setHyperKey, controlLock;
+public char accelKey = 'w'; public char leftKey = 'a'; public char rightKey = 'd'; public char shootKey = ' '; public char hyperKey = 'r';
 public boolean timeTaken;
 public float startTime, timer, countdown;
 public int score, asteroidsKilled;
@@ -48,6 +50,7 @@ public void setup() {
   leftCorner = 300+(fleetSize - 1)*200 - 75; //Arithmetic sequence for corner of rect based on fleetSize in Settings menu
   currentCorner = leftCorner;
   
+  controlLock = false; //Checks for controls with multiple same keybinds
   
   Delta = new Spaceship();
   Omicron = new Spaceship();
@@ -489,7 +492,7 @@ if(controlScreen == true) {
   fill(210, 0, 0);
   strokeWeight(2);
   stroke(200);
-  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100 && controlLock == false) {
     strokeWeight(4);
     stroke(17, 140, 79);
   }
@@ -503,7 +506,139 @@ if(controlScreen == true) {
   fill(255);
   textSize(60);
   text("Controls", width/2, 120);
+
+  textAlign(RIGHT);
+  textSize(30);
+  fill(230);
+  text("Accelerate", 450, 250);
+  textAlign(CENTER);
+  if(setAccelKey == true) {
+    fill(200);
+    text("Press any key", 862, 248);
+  }
+  else {
+    if(accelKey == ' ')
+      text("SPACEBAR", 862, 248);
+    else
+      text(accelKey, 862, 248);
+  }
+  noFill();
+  strokeWeight(2);
+  stroke(200);
+  if((mouseX >= 750 && mouseX <= 975 && mouseY >= 200 && mouseY <= 280) || setAccelKey == true) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(750, 200, 225, 80);  
   
+  textAlign(RIGHT);
+  fill(230);
+  text("Turn Left", 450, 400);
+  textAlign(CENTER);
+  if(setLeftKey == true) {
+    fill(200);
+    text("Press any key", 862, 398);
+  }
+  else {
+    if(leftKey == ' ')
+      text("SPACEBAR", 862, 398);
+    else
+      text(leftKey, 862, 398);
+  }
+  noFill();
+  strokeWeight(2);
+  stroke(200);
+  if((mouseX >= 750 && mouseX <= 975 && mouseY >= 350 && mouseY <= 430) || setLeftKey == true) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(750, 350, 225, 80);  
+  
+  textAlign(RIGHT);
+  fill(230);
+  text("Turn Right", 450, 550);
+  textAlign(CENTER);
+  if(setRightKey == true) {
+    fill(200);
+    text("Press any key", 862, 548);
+  }
+  else {
+    if(rightKey == ' ')
+      text("SPACEBAR", 862, 548);
+    else
+      text(rightKey, 862, 548);
+  }
+  noFill();
+  strokeWeight(2);
+  stroke(200);
+  if((mouseX >= 750 && mouseX <= 975 && mouseY >= 500 && mouseY <= 580) || setRightKey == true) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(750, 500, 225, 80);
+  
+  textAlign(RIGHT);
+  fill(230);
+  text("Fire Bullet", 450, 700);
+  textAlign(CENTER);
+  if(setShootKey == true) {
+    fill(200);
+    text("Press any key", 862, 698);
+  }
+  else {
+    if(shootKey == ' ')
+      text("SPACEBAR", 862, 698);
+    else
+      text(shootKey, 862, 698);
+  }
+  noFill();
+  strokeWeight(2);
+  stroke(200);
+  if((mouseX >= 750 && mouseX <= 975 && mouseY >= 650 && mouseY <= 730) || setShootKey == true) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(750, 650, 225, 80);
+  
+  textAlign(RIGHT);
+  fill(230);
+  text("Hyperspace", 450, 850);
+  textAlign(CENTER);
+  if(setHyperKey == true) {
+    fill(200);
+    text("Press any key", 862, 848);
+  }
+  else {
+    if(hyperKey == ' ')
+      text("SPACEBAR", 862, 848);
+    else
+      text(hyperKey, 862, 848);
+  }
+  noFill();
+  strokeWeight(2);
+  stroke(200);
+  if((mouseX >= 750 && mouseX <= 975 && mouseY >= 800 && mouseY <= 880) || setHyperKey == true) {
+    strokeWeight(4);
+    stroke(17, 140, 79);
+  }
+  rect(750, 800, 225, 80);
+  
+  if(accelKey == leftKey || accelKey == rightKey || accelKey == shootKey || accelKey == hyperKey)
+    controlLock = true;
+  else if(leftKey == rightKey || leftKey == shootKey || leftKey == hyperKey)
+    controlLock = true;
+  else if(rightKey == shootKey || rightKey == hyperKey)
+    controlLock = true;
+  else if(shootKey == hyperKey)
+    controlLock = true;
+  else
+    controlLock = false; 
+    
+  if(controlLock == true) {
+    fill(210, 0, 0);
+    textAlign(CENTER);
+    text("All keybinds must be unique! Don't break the game!", width/2, 935);
+  }
 }
 
 //////////////////////////////////////////////// End of Controls Screen
@@ -671,6 +806,7 @@ if(startScreen == true) {
   if(mouseX >= 875 && mouseX <= 1125 && mouseY >= 455 && mouseY <= 542) { //Controls
     startScreen = false;
     controlScreen = true;
+    return;
   }
 } //End of startScreen
 
@@ -743,10 +879,58 @@ if(resetConfirmation == true) {
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 if(controlScreen == true) {
-  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100 && controlLock == false) {
     startScreen = true;
     controlScreen = false;
+    setAccelKey = false;
+    setLeftKey = false;
+    setRightKey = false;
+    setShootKey = false;
+    setHyperKey = false;
     background(0);
+  }
+  
+  else if(mouseX >= 750 && mouseX <= 975 && mouseY >= 200 && mouseY <= 280) { //Accelerate Controls
+    setAccelKey = true;
+    setLeftKey = false;
+    setRightKey = false;
+    setShootKey = false;
+    setHyperKey = false;    
+  }
+  else if(mouseX >= 750 && mouseX <= 975 && mouseY >= 350 && mouseY <= 430) {
+    setAccelKey = false;
+    setLeftKey = true;
+    setRightKey = false;
+    setShootKey = false;
+    setHyperKey = false;
+  }
+  else if(mouseX >= 750 && mouseX <= 975 && mouseY >= 500 && mouseY <= 580) {
+    setAccelKey = false;
+    setLeftKey = false;
+    setRightKey = true;
+    setShootKey = false;
+    setHyperKey = false;
+  }
+  else if(mouseX >= 750 && mouseX <= 975 && mouseY >= 650 && mouseY <= 730) {
+    setAccelKey = false;
+    setLeftKey = false;
+    setRightKey = false;
+    setShootKey = true;
+    setHyperKey = false;
+  }
+  else if(mouseX >= 750 && mouseX <= 975 && mouseY >= 800 && mouseY <= 880) {
+    setAccelKey = false;
+    setLeftKey = false;
+    setRightKey = false;
+    setShootKey = false;
+    setHyperKey = true;
+  }
+  else {
+    setAccelKey = false;
+    setLeftKey = false;
+    setRightKey = false;
+    setShootKey = false;
+    setHyperKey = false;
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -792,7 +976,6 @@ if(gameEnd == true) {
 } //End of draw()
 
 ////////////////////////////////////////////////////////////////////
-
 public void keyPressed() {
   if(gameStart == true) {
     if(key == 'w' || key == 'W')
@@ -835,16 +1018,37 @@ public void keyPressed() {
       name += String.fromCharCode(key);
       nameLength++;
     }
-  }
+  } //End of game start
+  
+  if(controlScreen == true) {
+    if(setAccelKey == true && key >= 32 && key <= 126) 
+      accelKey = String.fromCharCode(key);
+    if(setLeftKey == true && key >= 32 && key <= 126)
+      leftKey = String.fromCharCode(key);
+    if(setRightKey == true && key >= 32 && key <= 126)
+      rightKey = String.fromCharCode(key);
+    if(setShootKey == true && key >= 32 && key <= 126)
+      shootKey = String.fromCharCode(key);
+    if(setHyperKey == true && key >= 32 && key <= 126)
+      hyperKey = String.fromCharCode(key);
+    
+    if(key >= 32 && key <= 126) {
+      setAccelKey = false;
+      setLeftKey = false;
+      setRightKey = false;
+      setShootKey = false;
+      setHyperKey = false;
+    } //FOR GITHUB JAVASCRIPT
+  } //End of Control Screen 
 }
 
 /////////////////////////////////////////////////////////////
 
 public void keyReleased() {
-  if(key == 'w' || key == 'W')
+  if(key == accelKey)
     wPressed = false;
-  if(key == 'a' || key == 'A')
+  if(key == leftKey)
     aPressed = false;
-  if(key == 'd' || key == 'D')
+  if(key == rightKey)
     dPressed = false;
 }
