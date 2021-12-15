@@ -517,7 +517,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 248);
   }
   else {
-    if(accelKey == ' ' || accelKey == void)
+    if(accelKey == ' ')
       text("SPACEBAR", 862, 248);
     else
       text(accelKey, 862, 248);
@@ -540,7 +540,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 398);
   }
   else {
-    if(leftKey == ' ' || leftKey == void)
+    if(leftKey == ' ')
       text("SPACEBAR", 862, 398);
     else
       text(leftKey, 862, 398);
@@ -563,7 +563,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 548);
   }
   else {
-    if(rightKey == ' ' || rightKey == void)
+    if(rightKey == ' ')
       text("SPACEBAR", 862, 548);
     else
       text(rightKey, 862, 548);
@@ -586,7 +586,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 698);
   }
   else {
-    if(shootKey == ' ' || shootKey == void)
+    if(shootKey == ' ')
       text("SPACEBAR", 862, 698);
     else
       text(shootKey, 862, 698);
@@ -609,7 +609,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 848);
   }
   else {
-    if(hyperKey == ' ' || hyperKey == void)
+    if(hyperKey == ' ')
       text("SPACEBAR", 862, 848);
     else
       text(hyperKey, 862, 848);
@@ -1021,16 +1021,36 @@ public void keyPressed() {
   } //End of game start
   
   if(controlScreen == true) {
-    if(setAccelKey == true && key >= 32 && key <= 126) 
-      accelKey = String.fromCharCode(key);
-    if(setLeftKey == true && key >= 32 && key <= 126)
-      leftKey = String.fromCharCode(key);
-    if(setRightKey == true && key >= 32 && key <= 126)
-      rightKey = String.fromCharCode(key);
-    if(setShootKey == true && key >= 32 && key <= 126)
-      shootKey = String.fromCharCode(key);
-    if(setHyperKey == true && key >= 32 && key <= 126)
-      hyperKey = String.fromCharCode(key);
+    if(setAccelKey == true && key >= 32 && key <= 126) {
+      if(key == 32)
+        accelKey = ' ';
+      else
+        accelKey = String.fromCharCode(key);
+    }
+    if(setLeftKey == true && key >= 32 && key <= 126) {
+      if(key == 32)
+        leftKey = ' ';
+      else
+        leftKey = String.fromCharCode(key);
+    }
+    if(setRightKey == true && key >= 32 && key <= 126) {
+      if(key == 32)
+        rightKey = ' ';
+      else
+        rightKey = String.fromCharCode(key);
+    }
+    if(setShootKey == true && key >= 32 && key <= 126) {
+      if(key == 32)
+        shootKey = ' ';
+      else
+        shootKey = String.fromCharCode(key);
+    }
+    if(setHyperKey == true && key >= 32 && key <= 126) {
+       if(key == 32)
+        hyperKey = ' ';
+      else
+        hyperKey = String.fromCharCode(key);
+    }
     
     if(key >= 32 && key <= 126) {
       setAccelKey = false;
