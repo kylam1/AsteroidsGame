@@ -1,6 +1,7 @@
 public Star[] stars = new Star[300];
 public Spaceship[] fleet = new Spaceship[5];
 public int fleetSize = 5;
+public ArrayList <Bullet> pew = new ArrayList <Bullet> ();
 public int leftCorner, currentCorner; //Corner of rect based on fleetSize in Settings menu
 public int r = 255; public int g = 255; public int b = 255;
 public int slideRx = 524; public int slideGx = 824; public int slideBx = 1124;
@@ -8,7 +9,7 @@ public Spaceship Delta; public Spaceship Omicron;
 public ArrayList <Asteroid> wreckers = new ArrayList <Asteroid> ();
 public boolean wPressed, aPressed, dPressed;
 public boolean inHyperSpace;
-public int hyperTime;
+public int hyperTime, shotTime;
 public ArrayList <Particle> debris = new ArrayList <Particle> ();
 public int shipsRemaining;
 public boolean startScreen, leaderboard, settingScreen, resetConfirmation, controlScreen, gameStart, gameEnd;
@@ -32,6 +33,7 @@ public void setup() {
   }
   
   hyperTime = 0;
+  shotTime = 0;
   for(int i = 0; i < fleetSize; i++) {
     fleet[i] = new Spaceship();
   }
@@ -665,7 +667,14 @@ if(gameStart == true) {
       fleet[i].show();
     }
   }  
-      
+  
+  for(int i = 0; i < pew.size(); i++) {
+    pew.get(i).move();
+    pew.get(i).show();
+    if(pew.get(i).getCenterX() > width || pew.get(i).getCenterY() > height || pew.get(i).getCenterX() < 0 || pew.get(i).getCenterY() <0)
+      pew.remove(i);
+  }
+  
   if(wPressed == true) {
     for(int i = 0; i < fleetSize; i++) {
       if(fleet[i] != null) {
@@ -685,6 +694,30 @@ if(gameStart == true) {
       fleet[i].turn(5);
   }
   
+  //Colissions 
+  for(int i = 0; i < pew.size(); i++) {
+    for(int j = 0; j < wreckers.size(); j++) {
+      if(dist(pew.get(i).getCenterX(), pew.get(i).getCenterY(), wreckers.get(j).getCenterX(), wreckers.get(j).getCenterY()) < wreckers.get(j).getRadius()) {
+        double tempCenterX = wreckers.get(j).getCenterX(); 
+        double tempCenterY = wreckers.get(j).getCenterY();
+        int tempColor = wreckers.get(j).getColor();
+        score+=(int)(100*wreckers.get(j).getRadius());
+        wreckers.set(j, new Asteroid());
+        if(debris.size() <= 1)
+          for(int k = 1; k < 25; k++) {
+            debris.set(0, new Particle(tempCenterX, tempCenterY, tempColor));
+            debris.add(new Particle(tempCenterX, tempCenterY, tempColor));
+          }
+        else {
+          for(int k = 1; k <= 25; k++)
+            debris.add(new Particle(tempCenterX, tempCenterY, tempColor));
+        }
+      pew.remove(i);
+      asteroidsKilled++;
+      }
+    }
+  }
+        
   for(int i = 0; i < fleetSize; i++) {
     for(int j = 0; j < wreckers.size(); j++) {
       if( fleet[i] != null && dist(fleet[i].getCenterX(), fleet[i].getCenterY(), wreckers.get(j).getCenterX(), wreckers.get(j).getCenterY()) < fleet[i].getRadius() + wreckers.get(j).getRadius() + 1.5) {
@@ -693,14 +726,20 @@ if(gameStart == true) {
         int tempColor = wreckers.get(j).getColor();
         score+=(int)(100*wreckers.get(j).getRadius());
         wreckers.set(j, new Asteroid());
-        for(int k = 1; k < 25; k++) {
-          debris.set(0, new Particle(tempCenterX, tempCenterY, tempColor));
-          debris.add(new Particle(tempCenterX, tempCenterY, tempColor));
+        if(debris.size() <= 1) {
+          for(int k = 1; k < 25; k++) {
+            debris.set(0, new Particle(tempCenterX, tempCenterY, tempColor));
+            debris.add(new Particle(tempCenterX, tempCenterY, tempColor));
+          }
+        }
+        else {
+          for(int k = 1; k <= 25; k++)
+            debris.add(new Particle(tempCenterX, tempCenterY, tempColor));
         }
         double shipCenterX = fleet[i].getCenterX();
         double shipCenterY = fleet[i].getCenterY();
         color explodeColor = color(200, 0, 0);
-        for(int n = 25; n < 50; n++) {
+        for(int n = 25; n <= 50; n++) {
           debris.add(n, new Particle(shipCenterX, shipCenterY, explodeColor));
         }
         fleet[i] = null;
@@ -709,6 +748,7 @@ if(gameStart == true) {
       }
     }
   }
+  
   if(debris.get(0) != null) {
     if(debris.get(0).getSize() > 3) {
       for(int k = 0; k < debris.size(); k++) {
@@ -969,6 +1009,8 @@ if(gameEnd == true) {
       debris.remove(0);
     while(wreckers.size() != 0)
       wreckers.remove(0);
+    while(pew.size() != 0)
+      pew.remove(0);
     setup();
   } //End of return to main menu
   
@@ -984,6 +1026,14 @@ public void keyPressed() {
       aPressed = true;
     if(key == rightKey.charCodeAt(0))
       dPressed = true;
+    if(key == shootKey.charCodeAt(0)) {
+      if(millis() - shotTime > 200) {
+        for(int i = 0; i < fleetSize; i++) {
+          if(fleet[i] != null)
+            pew.add(new Bullet(fleet[i]));
+          shotTime = millis();
+        }
+      }
     if(key == hyperKey.charCodeAt(0)) {
       if(millis() - hyperTime >= 1500) {
         double newX = Math.random()*width-100;
