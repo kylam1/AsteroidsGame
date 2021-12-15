@@ -82,8 +82,11 @@ class Spaceship extends Floater
   }
   
   public float getMyPointDirection() {return (float)myPointDirection*PI/180;}
+  public double getMyDirection() {return myPointDirection;}
   public float getCenterX() {return (float)myCenterX;}
   public float getCenterY() {return (float)myCenterY;}
+  public float getXspeed() {return (float)myXspeed;}
+  public float getYspeed() {return (float)myYspeed;}
   public int [] getXcorners() {return xCorners;}
   public int [] getYcorners() {return yCorners;}
   public void setPointDirection(int x) {myPointDirection = x; }
