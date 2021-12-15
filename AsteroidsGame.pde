@@ -13,7 +13,7 @@ public ArrayList <Particle> debris = new ArrayList <Particle> ();
 public int shipsRemaining;
 public boolean startScreen, leaderboard, settingScreen, resetConfirmation, controlScreen, gameStart, gameEnd;
 public boolean setAccelKey, setLeftKey, setRightKey, setShootKey, setHyperKey, controlLock;
-public char accelKey = 'w'; public char leftKey = 'a'; public char rightKey = 'd'; public char shootKey = ' '; public char hyperKey = 'r';
+public char accelKey = String.fromCharCode(119); public char leftKey = String.fromCharCode(97); public char rightKey = String.fromCharCode(100); public char shootKey = ' '; public char hyperKey = String.fromCharCode(114);
 public boolean timeTaken;
 public float startTime, timer, countdown;
 public int score, asteroidsKilled;
