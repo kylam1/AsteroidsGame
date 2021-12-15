@@ -517,7 +517,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 248);
   }
   else {
-    if(accelKey == ' ')
+    if(accelKey == ' ' || accelKey == void)
       text("SPACEBAR", 862, 248);
     else
       text(accelKey, 862, 248);
@@ -540,7 +540,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 398);
   }
   else {
-    if(leftKey == ' ')
+    if(leftKey == ' ' || leftKey == void)
       text("SPACEBAR", 862, 398);
     else
       text(leftKey, 862, 398);
@@ -563,7 +563,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 548);
   }
   else {
-    if(rightKey == ' ')
+    if(rightKey == ' ' || rightKey == void)
       text("SPACEBAR", 862, 548);
     else
       text(rightKey, 862, 548);
@@ -586,7 +586,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 698);
   }
   else {
-    if(shootKey == ' ')
+    if(shootKey == ' ' || shootKey == void)
       text("SPACEBAR", 862, 698);
     else
       text(shootKey, 862, 698);
@@ -609,7 +609,7 @@ if(controlScreen == true) {
     text("Press any key", 862, 848);
   }
   else {
-    if(hyperKey == ' ')
+    if(hyperKey == ' ' || hyperKey == void)
       text("SPACEBAR", 862, 848);
     else
       text(hyperKey, 862, 848);
