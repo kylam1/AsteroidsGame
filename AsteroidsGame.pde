@@ -276,15 +276,15 @@ if(settingScreen == true) {
   fill(210, 0, 0);
   strokeWeight(2);
   stroke(200);
-  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
+  if(mouseX >= 1025 && mouseX <= 1175 && mouseY >= 50 && mouseY <= 100) {
     strokeWeight(4);
     stroke(17, 140, 79);
   }
-  rect(50, 50, 150, 50);
+  rect(1025, 50, 150, 50);
   fill(255);
-  textSize(25);
+  textSize(16);
   textAlign(CENTER);
-  text("Return", 125, 83);
+  text("Reset Leaderboard", 1100, 82);
   
   textAlign(CENTER);
   fill(255);
@@ -451,7 +451,7 @@ if(settingScreen == true) {
   textAlign(CENTER);
   textSize(25);
   fill(255);
-  text("Reset Leaderboard", 700, 890);
+  text("Save & Return", 700, 890);
 } //End of settingScreen
 
 //////////////////////////////////////////////// End of Settings Screen
@@ -860,9 +860,9 @@ if(leaderboard == true) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 if(settingScreen == true) {
-  if(mouseX >= 50 && mouseX <= 200 && mouseY >= 50 && mouseY <= 100) {
-    startScreen = true;
+  if(mouseX >= 1025 && mouseX <= 1125 && mouseY >= 50 && mouseY <= 100) {
     settingScreen = false;
+    resetConfirmation = true;
     background(0);
   } 
     
@@ -894,9 +894,9 @@ if(settingScreen == true) {
   }
   
   if(mouseX >= 550 && mouseX <= 850 && mouseY >= 850 && mouseY <= 920) {
+    startScreen = true;
     settingScreen = false;
-    resetConfirmation = true;
-    background(0);
+    background(0);    
   }
 }
 //////////////////////////////////////////////////////////////////////////////////////////
