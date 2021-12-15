@@ -978,36 +978,39 @@ if(gameEnd == true) {
 ////////////////////////////////////////////////////////////////////
 public void keyPressed() {
   if(gameStart == true) {
-    if(key == 'w' || key == 'W')
+    if(key == accelKey)
       wPressed = true;
-    if(key == 'a' || key == 'A')
+    if(key == leftKey)
       aPressed = true;
-    if(key == 'd' || key == 'D')
+    if(key == rightKey)
       dPressed = true;
-    if(key == ' ') {
-      double newX = Math.random()*width-100;
-      double newY = Math.random()*height-100;
-      int newPoint = (int)(Math.random()*360);
-      for(int i = 0; i < fleet.length; i++) {
-        if(fleet[i] != null)
-          fleet[i].hyperspace(newX, newY, newPoint);
+    if(key == hyperKey) {
+      if(millis() - hyperTime >= 1500) {
+        double newX = Math.random()*width-100;
+        double newY = Math.random()*height-100;
+        int newPoint = (int)(Math.random()*360);
+        hyperTime = millis();
+        for(int i = 0; i < fleetSize; i++) {     
+          if(fleet[i] != null)
+            fleet[i].hyperspace(newX, newY, newPoint);
+        }
+        if(fleet[1] != null)
+          fleet[1].moveOver(-50, 50);
+        if(fleet[2] != null)
+          fleet[2].moveOver(-50, -50);
+        if(fleet[3] != null)
+          fleet[3].moveOver(-100, 100);
+        if(fleet[4] != null)
+          fleet[4].moveOver(-100, -100);
+        for(int i = 0; i < stars.length; i++)
+          stars[i] = new Star((int)(Math.random()*width), (int)(Math.random()*height));
+        while(wreckers.size() != 0)
+          wreckers.remove(0);
+        for(int i = 1; i <= 15; i++)
+          wreckers.add(new Asteroid());
       }
-      if(fleet[1] != null)
-        fleet[1].moveOver(-50, 50);
-      if(fleet[2] != null)
-        fleet[2].moveOver(-50, -50);
-      if(fleet[3] != null)
-        fleet[3].moveOver(-100, 100);
-      if(fleet[4] != null)
-        fleet[4].moveOver(-100, -100);
-      for(int i = 0; i < stars.length; i++)
-        stars[i] = new Star((int)(Math.random()*width), (int)(Math.random()*height));
-      while(wreckers.size() != 0)
-        wreckers.remove(0);
-      for(int i = 1; i <= 15; i++)
-        wreckers.add(new Asteroid());
-    }
-  }
+    }  //End of SPACEBAR pressed
+  } //End gameStart == true
   
   if(gameEnd == true) {
     if((key == 127 || key == 96) && nameLength > 0) {
@@ -1018,7 +1021,7 @@ public void keyPressed() {
       name += String.fromCharCode(key);
       nameLength++;
     }
-  } //End of game start
+  } //End of game end
   
   if(controlScreen == true) {
     if(setAccelKey == true && key >= 32 && key <= 126) {
