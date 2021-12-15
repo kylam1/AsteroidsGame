@@ -3,8 +3,8 @@ class Bullet extends Floater {
     myCenterX = theShip.getCenterX();
     myCenterY = theShip.getCenterY();
     myPointDirection = theShip.getMyDirection();
-    myXspeed = theShip.getXspeed() + 2*Math.cos(myPointDirection * PI/180);
-    myYspeed = theShip.getYspeed() + 2*Math.sin(myPointDirection * PI/180);
+    myXspeed = theShip.getXspeed() + 3*Math.cos(myPointDirection * PI/180);
+    myYspeed = theShip.getYspeed() + 3*Math.sin(myPointDirection * PI/180);
     accelerate(.6);
   }
   public void move() {
