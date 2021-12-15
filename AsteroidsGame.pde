@@ -663,6 +663,7 @@ if(gameStart == true) {
   for(int i = 0; i < fleetSize; i++) {
     if(fleet[i] != null) {
       fleet[i].move();
+      strokeWeight(2);
       stroke(r, g, b);
       fleet[i].show();
     }
@@ -670,6 +671,9 @@ if(gameStart == true) {
   
   for(int i = 0; i < pew.size(); i++) {
     pew.get(i).move();
+    strokeWeight(1);
+    stroke(r, g, b);
+    fill(255);
     pew.get(i).show();
     if(pew.get(i).getCenterX() > width || pew.get(i).getCenterY() > height || pew.get(i).getCenterX() < 0 || pew.get(i).getCenterY() <0)
       pew.remove(i);
@@ -697,7 +701,7 @@ if(gameStart == true) {
   //Colissions 
   for(int i = 0; i < pew.size(); i++) {
     for(int j = 0; j < wreckers.size(); j++) {
-      if(dist(pew.get(i).getCenterX(), pew.get(i).getCenterY(), wreckers.get(j).getCenterX(), wreckers.get(j).getCenterY()) < wreckers.get(j).getRadius()) {
+      if(dist(pew.get(i).getCenterX(), pew.get(i).getCenterY(), wreckers.get(j).getCenterX(), wreckers.get(j).getCenterY()) < wreckers.get(j).getRadius() + 2.5) {
         double tempCenterX = wreckers.get(j).getCenterX(); 
         double tempCenterY = wreckers.get(j).getCenterY();
         int tempColor = wreckers.get(j).getColor();
@@ -714,6 +718,7 @@ if(gameStart == true) {
         }
       pew.remove(i);
       asteroidsKilled++;
+      return;
       }
     }
   }
