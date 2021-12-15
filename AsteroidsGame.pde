@@ -1034,6 +1034,7 @@ public void keyPressed() {
           shotTime = millis();
         }
       }
+    }
     if(key == hyperKey.charCodeAt(0)) {
       if(millis() - hyperTime >= 1500) {
         double newX = Math.random()*width-100;
